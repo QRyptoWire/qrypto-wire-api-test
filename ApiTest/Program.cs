@@ -20,13 +20,13 @@ namespace ApiTest
 			string password;
 			string sessionId = "";
 
-			Console.WriteLine("DeviceId:");
+			Console.WriteLine("DeviceId (Defatlt: asd):");
 			deviceId = Console.ReadLine();
 			if (deviceId == "")
 			{
 				deviceId = "asd";
 			}
-			Console.WriteLine("Password:");
+			Console.WriteLine("Password (Default: PASSWORD):");
 			password = Console.ReadLine();
 			if (password == "")
 			{
