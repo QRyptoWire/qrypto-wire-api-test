@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 using RestSharp;
 
@@ -8,17 +9,22 @@ namespace ApiTest
 	{
 		private static void Main(string[] args)
 		{
-			var LOCAL = false;
-			var client = !LOCAL
-				? new RestClient("http://qryptowire.azurewebsites.net")
-				: new RestClient("http://localhost:49954");
 
 			RestRequest request;
 			IRestResponse response;
+			RestClient client;
 
 			string deviceId;
 			string password;
 			string sessionId = "";
+
+
+			Console.WriteLine("Run on local (\"l\" for local, ENTER for Azure)?");
+			var tmp = Console.ReadLine();
+			client = tmp == "l" ? 
+				new RestClient("http://localhost:49954") 
+				: new RestClient("http://qryptowire.azurewebsites.net");
+
 
 			Console.WriteLine("DeviceId (hit ENTER for: \"asd\"):");
 			deviceId = Console.ReadLine();
@@ -38,6 +44,7 @@ namespace ApiTest
 			Console.WriteLine("Test /Register");
 			if (Console.ReadLine() != "n")
 			{
+				Console.WriteLine("Starting test...");
 				request = new RestRequest("api/Register", Method.POST);
 				request.AddParameter("DeviceId", deviceId);
 				request.AddParameter("Password", password);
@@ -57,6 +64,7 @@ namespace ApiTest
 			Console.WriteLine("Testing /Login");
 			if (Console.ReadLine() != "n")
 			{
+				Console.WriteLine("Starting test...");
 				request = new RestRequest("api/Login", Method.POST);
 				request.AddParameter("DeviceId", deviceId);
 				request.AddParameter("Password", password);
@@ -80,6 +88,7 @@ namespace ApiTest
 			Console.WriteLine("Testing /SendMessage");
 			if (Console.ReadLine() != "n")
 			{
+				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/SendMessage/{sessionId}", Method.POST);
 				var msg = new Message()
 				{
@@ -109,6 +118,7 @@ namespace ApiTest
 			Console.WriteLine("Testing /FetchMessages");
 			if (Console.ReadLine() != "n")
 			{
+				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/FetchMessages/{sessionId}", Method.GET);
 				response = client.Execute(request);
 
@@ -125,6 +135,7 @@ namespace ApiTest
 			Console.WriteLine("Testing /AddContact");
 			if (Console.ReadLine() != "n")
 			{
+				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/AddContact/{sessionId}", Method.POST);
 				var con = new Contact()
 				{
@@ -150,7 +161,7 @@ namespace ApiTest
 			Console.WriteLine("Testing /FetchContacts");
 			if (Console.ReadLine() != "n")
 			{
-
+				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/FetchContacts/{sessionId}", Method.GET);
 				response = client.Execute(request);
 
