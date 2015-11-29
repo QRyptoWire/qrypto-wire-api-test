@@ -176,12 +176,46 @@ namespace ApiTest
 			}
 		
 			Console.WriteLine();
+			Console.WriteLine("Testing /GetUserId");
+			if (Console.ReadLine() != "n")
+			{
+				Console.WriteLine("Starting test...");
+				request = new RestRequest($"api/GetUserId/{sessionId}", Method.GET);
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+			}
+		
+			Console.WriteLine();
 			Console.WriteLine("Testing /RegisterPushToken");
 			if (Console.ReadLine() != "n")
 			{
 				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/RegisterPushToken/{sessionId}", Method.POST);
 				request.AddJsonBody("ONOMATOPEJA");
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+			}
+
+			Console.WriteLine();
+			Console.WriteLine("Testing /UnRegisterPushToken");
+			if (Console.ReadLine() != "n")
+			{
+				Console.WriteLine("Starting test...");
+				request = new RestRequest($"api/UnRegisterPushToken/{sessionId}", Method.GET);
 				response = client.Execute(request);
 
 				Console.WriteLine(
