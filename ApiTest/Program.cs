@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
+using System.Text;
 using RestSharp;
 
 namespace ApiTest
@@ -163,6 +164,24 @@ namespace ApiTest
 			{
 				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/FetchContacts/{sessionId}", Method.GET);
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+			}
+		
+			Console.WriteLine();
+			Console.WriteLine("Testing /RegisterPushToken");
+			if (Console.ReadLine() != "n")
+			{
+				Console.WriteLine("Starting test...");
+				request = new RestRequest($"api/RegisterPushToken/{sessionId}", Method.POST);
+				request.AddJsonBody("ONOMATOPEJA");
 				response = client.Execute(request);
 
 				Console.WriteLine(
