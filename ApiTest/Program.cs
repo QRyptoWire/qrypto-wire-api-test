@@ -20,19 +20,20 @@ namespace ApiTest
 			string password;
 			string sessionId = "";
 
-			Console.WriteLine("DeviceId (Defatlt: asd):");
+			Console.WriteLine("DeviceId (hit ENTER for: \"asd\"):");
 			deviceId = Console.ReadLine();
 			if (deviceId == "")
 			{
 				deviceId = "asd";
 			}
-			Console.WriteLine("Password (Default: PASSWORD):");
+			Console.WriteLine("Password (hiy ENTER for: \"PASSWORD\"):");
 			password = Console.ReadLine();
 			if (password == "")
 			{
 				password = "PASSWORD";
 			}
 
+			Console.WriteLine("For each test input \"n\" to cancel that test or ENTER to proceed.");
 			Console.WriteLine();
 			Console.WriteLine("Test /Register");
 			if (Console.ReadLine() != "n")
