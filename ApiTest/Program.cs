@@ -95,11 +95,10 @@ namespace ApiTest
 				{
 					Body = "ARAGoRn",
 					DateSent = DateTime.Now,
-					ReceiverId = 171,
+					ReceiverId = 211,
 					SenderId = 171,
 					SessionKey = "aaa",
-					Signature = "bbb",
-					Time = DateTime.Now
+					Signature = "bbb"
 				};
 				request.AddJsonBody(msg);
 				response = client.Execute(request);
@@ -140,10 +139,9 @@ namespace ApiTest
 				request = new RestRequest($"api/AddContact/{sessionId}", Method.POST);
 				var con = new Contact()
 				{
-					ReceiverId = 171,
-					SenderId = 171,
-					Name = "Papa Smurf",
-					PublicKey = "keypub"
+					UserId = 171,
+					Name = "Papa Urf",
+					PublicKey = "keypub2"
 				};
 				request.AddJsonBody(con);
 				response = client.Execute(request);
