@@ -31,7 +31,7 @@ namespace ApiTest
 			deviceId = Console.ReadLine();
 			if (deviceId == "")
 			{
-				deviceId = "asd";
+				deviceId = "asdxy";
 			}
 			Console.WriteLine("Password (hiy ENTER for: \"PASSWORD\"):");
 			password = Console.ReadLine();
@@ -95,10 +95,11 @@ namespace ApiTest
 				{
 					Body = "ARAGoRn",
 					DateSent = DateTime.Now,
-					ReceiverId = 211,
-					SenderId = 171,
+					ReceiverId = 311,
+					SenderId = 311,
 					SessionKey = "aaa",
-					Signature = "bbb"
+					Signature = "bbb",
+					InitVector = "ccc"
 				};
 				request.AddJsonBody(msg);
 				response = client.Execute(request);
@@ -139,7 +140,7 @@ namespace ApiTest
 				request = new RestRequest($"api/AddContact/{sessionId}", Method.POST);
 				var con = new Contact()
 				{
-					UserId = 171,
+					ReceiverId = 211,
 					Name = "Papa Urf",
 					PublicKey = "keypub2"
 				};
@@ -197,6 +198,63 @@ namespace ApiTest
 				Console.WriteLine("Starting test...");
 				request = new RestRequest($"api/RegisterPushToken/{sessionId}", Method.POST);
 				request.AddJsonBody("ONOMATOPEJA");
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+			}
+			Console.WriteLine();
+			Console.WriteLine("Testing /SetPushAllowed true");
+			if (Console.ReadLine() != "n")
+			{
+				Console.WriteLine("Starting test...");
+				Console.WriteLine("Set false...");
+				request = new RestRequest($"api/SetPushAllowed/{sessionId}", Method.POST);
+				request.AddParameter("IsAllowed", false);
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+
+				Console.WriteLine("Check if false...");
+				request = new RestRequest($"api/IsPushAllowed/{sessionId}", Method.GET);
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+
+				Console.WriteLine();
+				Console.WriteLine("Set true...");
+				request = new RestRequest($"api/SetPushAllowed/{sessionId}", Method.POST);
+				request.AddParameter("IsAllowed", true);
+				response = client.Execute(request);
+
+				Console.WriteLine(
+					"Status: "
+					+ response.ResponseStatus + " | "
+					+ response.StatusCode + " | "
+					+ response.ErrorMessage
+					);
+				Console.WriteLine(response.Content);
+
+
+				Console.WriteLine("Check if true...");
+				request = new RestRequest($"api/IsPushAllowed/{sessionId}", Method.GET);
 				response = client.Execute(request);
 
 				Console.WriteLine(
